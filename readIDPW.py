@@ -1,8 +1,7 @@
-import pcap
 import re
 import sys
 
-USERNAME = re.compile(r"(m_id)[^(&|=)]*=(?P<username>[^(&|=)]*)(&|$|\s|\[)", re.I)
+USERNAME = re.compile(r"(id|login|m_id)[^(&|=)]*=(?P<username>[^(&|=)]*)(&|$|\s|\[)", re.I)
 PASSWD = re.compile(r"pass[^(&|=)]*=(?P<pass>[^(&|=|[)]*)(&|$|\s|\[)", re.I)
 
 pkg = """
@@ -26,25 +25,49 @@ Cookie: __utmz=33484581.1564635341.26.2.utmcsr=ipsi.joongbu.ac.kr|utmccn=(referr
 
 returnURL=https%3A%2F%2Fwww.joongbu.ac.kr%2Fhome%2F&req_returnUrl=https%3A%2F%2Fwww.joongbu.ac.kr%2Fhome%2F&m_id=91714313&passwd=testtest&_csrf=7067db61-7077-4396-8efc-8d44d349b2ef
 """
-def parsePkg(pkg):
-	username = str(re.search(USERNAME, pkg))
-	if not username:
-		return None
-	# print(username)
-	# username = unquote(username.groups()[1])
-	idx = username.find("match=")
-	lng = len(username)
-	userid = username[idx+7:lng-3]
-	print (userid)
 
-	passwd = str(re.search(PASSWD, pkg))
-	if not passwd:
-		return None
-	# print(passwd)	
-	# passwd = unquote(passwd.groups()[0])
-	idx = passwd.find("match=")
-	lng = len(passwd)
-	userpw = passwd[idx+7:lng-3]
-	
-	print(userpw)
+def parsePkg(pkg):
+	pog = pkg[1]
+
+	hostStart = pkg.find("Host:")
+	lastDomain = pkg.index("Connection:")
+	hostName = pkg[(hostStart)+6:(lastDomain)-1]
+	print (hostName)
+
+	if pog == "G":
+		username = str(re.search(USERNAME, pkg))
+		if not username:
+			return None
+		idx = username.find("match=")
+		lng = len(username)
+		userid = username[idx+7:lng-3]
+		print (userid)
+
+		passwd = str(re.search(PASSWD, pkg))
+		if not passwd:
+			return None
+		idx = passwd.find("match=")
+		lng = len(passwd)
+		userpw = passwd[idx+7:lng-3]
+		print(userpw)
+	else:
+		rURL = pkg.find("returnURL")
+		pkg = pkg[rURL:]
+		username = str(re.search(USERNAME, pkg))
+		if not username:
+			return None
+		idx = username.find("match=")
+		lng = len(username)
+		userid = username[idx+7:lng-3]
+		print (userid)
+
+		passwd = str(re.search(PASSWD, pkg))
+		if not passwd:
+			return None
+		idx = passwd.find("match=")
+		lng = len(passwd)
+		userpw = passwd[idx+7:lng-3]
+		print(userpw)
+
+
 parsePkg(pkg)
