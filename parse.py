@@ -1,8 +1,12 @@
 import re
 import sys
+import sqlite3
 
-USERNAME = re.compile(r"(id|login|m_id)[^(&|=)]*=(?P<username>[^(&|=)]*)(&|$|\s|\[)", re.I)
-PASSWD = re.compile(r"pass[^(&|=)]*=(?P<pass>[^(&|=|[)]*)(&|$|\s|\[)", re.I)
+con = sqlite3.connect('./test.db')
+cur = con.cursor()
+
+USERNAME = re.compile(r"(id|login|m_id|user)[^(&|=)]*=(?P<username>[^(&|=)]*)(&|$|\s|\[)", re.I)
+PASSWD = re.compile(r"(pass|user)[^(&|=)]*=(?P<pass>[^(&|=|[)]*)(&|$|\s|\[)", re.I)
 
 pkg = """
 POST /memberLogin.es?mid=a10701010000&category=act HTTP/1.1
@@ -11,7 +15,7 @@ Connection: close
 Content-Length: 184
 Cache-Control: max-age=0
 Origin: https://www.joongbu.ac.kr
-Upgrade-Insecure-Requests: 1
+Upgrade-Iensecure-Requests: 1
 Content-Type: application/x-www-form-urlencoded
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36
 Sec-Fetch-User: ?1
@@ -27,12 +31,22 @@ returnURL=https%3A%2F%2Fwww.joongbu.ac.kr%2Fhome%2F&req_returnUrl=https%3A%2F%2F
 """
 
 def parsePkg(pkg):
+	ip = '127.0.0.1'
 	pog = pkg[1]
 
-	hostStart = pkg.find("Host:")
-	lastDomain = pkg.index("Connection:")
-	hostName = pkg[(hostStart)+6:(lastDomain)-1]
-	print (hostName)
+	#hostStart = pkg.find("Host:")
+	#lastDomain = pkg.index("Connection:")
+	#hostName = pkg[(hostStart)+6:(lastDomain)-1]
+	hostName = "www.joongbu.ac.kr"
+
+	contentTypeF = pkg.find("Content-Type: ")
+	contentTypeL = pkg.find("User-Agent")
+	contentType = pkg[(contentTypeF+14):(contentTypeL)-1]
+	print(contentType)
+
+	cookieStart = pkg.find("Cookie:")
+	cookieEnd = pkg.find("returnURL")
+	cookie = pkg[cookieStart+8:cookieEnd-2]
 
 	if pog == "G":
 		username = str(re.search(USERNAME, pkg))
@@ -41,7 +55,7 @@ def parsePkg(pkg):
 		idx = username.find("match=")
 		lng = len(username)
 		userid = username[idx+7:lng-3]
-		print (userid)
+		cur.execute()
 
 		passwd = str(re.search(PASSWD, pkg))
 		if not passwd:
@@ -59,7 +73,8 @@ def parsePkg(pkg):
 		idx = username.find("match=")
 		lng = len(username)
 		userid = username[idx+7:lng-3]
-		print (userid)
+		arrUserId = userid.split('=')
+		userID = arrUserId[1]
 
 		passwd = str(re.search(PASSWD, pkg))
 		if not passwd:
@@ -67,7 +82,10 @@ def parsePkg(pkg):
 		idx = passwd.find("match=")
 		lng = len(passwd)
 		userpw = passwd[idx+7:lng-3]
-		print(userpw)
+		arrUserPw = userpw.split('=')
+		userPW = arrUserPw[1]
 
+	cur.execute('INSERT INTO wos (id, pw, ip, host, cookie) VALUES(?, ?, ?, ?, ?);', (userID, userPW, ip, hostName, cookie))
+	con.commit()
 
 parsePkg(pkg)
