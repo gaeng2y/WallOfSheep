@@ -13,7 +13,6 @@ pkt = b'POST /signIn.php/user HTTP/1.1\r\nHost: 192.168.0.40\r\nConnection: keep
 
 def connect():
     conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep', charset='utf8')
-    conn.autocommit = True
     cur = conn.cursor()
     return cur
 
@@ -65,8 +64,11 @@ def parsePkt(pkt):
 def main():
 	cur = connect()
 	sql = 'INSERT into wos(id, pw, ip, host) values(%s, %s, %s, %s)'
-	cur.execute(sql, (parsePkt(pkt)[0], parsePkt(pkt)[1], '127.0.0.1', parsePkt(pkt)[2]))
-
+	
+	try:
+		cur.execute("select * form wos")
+	finally:
+		cur.close()
 	
 if __name__ == "__main__":
 	main()
