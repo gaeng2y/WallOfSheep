@@ -67,7 +67,7 @@ def main():
 	cur = conn.cursor()
 	sql = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
 	pkt, ip = sniff.sniff()
-	uid, upw, host = parsePkt(pkt)[0], parsePkt(pkt)[1], parsePkt(pkt)[2] 
+	print(parsePkt(pkt))
 	try:
 		cur.execute(sql, (uid, upw, host, ip))
 		conn.commit()
