@@ -53,7 +53,6 @@ def parsePkt(pkt):
 		userid = re.findall(USERNAME, pkt)
 		if not userid:
 			return None
-		#userid = userid.groups()
 		userid = userid[-1][-1]
 		
 		userpw = re.findall(PASSWD, pkt)
@@ -65,7 +64,7 @@ def parsePkt(pkt):
 
 def main():
 	cur = connect()
-	print(type(parsePkt(pkt)))
+	print(parsePkt(pkt)[0])
 	
 if __name__ == "__main__":
 	main()
