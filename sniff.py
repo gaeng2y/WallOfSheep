@@ -50,3 +50,4 @@ def sniff():
         except KeyError:        
             pass
 
+sniff()
