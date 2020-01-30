@@ -66,7 +66,7 @@ def main():
 	sql = 'INSERT into wos(id, pw, ip, host) values(%s, %s, %s, %s)'
 	
 	try:
-		cur.execute("select * form wos")
+		cur.execute("select * from wos")
 	finally:
 		cur.close()
 	
