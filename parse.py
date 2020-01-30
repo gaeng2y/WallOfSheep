@@ -59,7 +59,7 @@ def parsePkt(pkt):
 def main():
 	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep', charset='utf8')
 	conn.autocommit = True
-    cur = conn.cursor()
+	cur = conn.cursor()
 
 	sql = 'INSERT into wos(id, pw, ip, host) values(%s, %s, %s, %s)'
 	
