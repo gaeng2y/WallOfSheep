@@ -45,12 +45,6 @@ def parsePkt(pkt):
 	contype = contype.strip()
 	print(contype)
 
-	contentType = re.findall(CONTENTTYPE, pkt)
-	if not contentType:
-		return None
-	contentType = contentType[0].decode('utf-8')
-	contentType = contentType.strip()
-
 	if method == "GET":
 		userid = re.findall(USERNAME, pkt)
 		if not userid:
