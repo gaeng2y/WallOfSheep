@@ -21,7 +21,6 @@ def obfuscate(passwd):
 
 def parsePkt(inp):
 	pkt = inp
-	print(pkt)
 	#pkt = getPkt(pkt)
 	# host parse
 	host = re.search(HOST, pkt)
@@ -67,16 +66,19 @@ def main():
 	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep')
 	cur = conn.cursor()
 	sql = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
-	pkt, ip = sniff.sniff()
-	print(parsePkt(pkt))
-	try:
-		cur.execute(sql, (uid, upw, host, ip))
-		conn.commit()
-		cur.execute('select * from wos')
-		res = cur.fetchall()
-		print(res)
-	finally:
-		conn.close()
+	while(True):
+		pkt, ip = sniff.sniff()
+		uid, upw, host = parsePkt(pkt)[0], parsePkt(pkt)[1], parsePkt(pkt)[2] 
+		if uid is not None and upw is not None and host is not None:
+			try:
+				cur.execute(sql, (uid, upw, host, ip))
+				conn.commit()
+				cur.execute('select * from wos')
+				res = cur.fetchall()
+				print(res)
+			finally:
+				conn.close()
+
 	
 if __name__ == "__main__":
 	main()

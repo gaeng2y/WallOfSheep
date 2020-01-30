@@ -49,5 +49,3 @@ def sniff():
                     pass
         except KeyError:        
             pass
-
-sniff()
