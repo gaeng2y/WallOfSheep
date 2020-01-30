@@ -4,11 +4,11 @@ import pymysql
 import xml
 import sniff
 
-METHOD = re.compile("(POST|GET)")
-HOST = re.compile("host\s?:\s?(?P<host> .*)", re.I)
-CONTYPE = re.compile("content-type\s?:\s?(?P<contenttype> .*)", re.I)
-USERNAME = re.compile("(userid|login|m_id|id)[^(&|=)]*=(?P<username>[^(&|=)]*)", re.I)
-PASSWD = re.compile("(pass|userpw|pw)[^(&|=)]*=(?P<pass>[^(&|=|)]*)", re.I)
+METHOD = re.compile(rb"(POST|GET)")
+HOST = re.compile(rb"host\s?:\s?(?P<host> .*)", re.I)
+CONTYPE = re.compile(rb"content-type\s?:\s?(?P<contenttype> .*)", re.I)
+USERNAME = re.compile(rb"(userid|login|m_id|id)[^(&|=)]*=(?P<username>[^(&|=)]*)", re.I)
+PASSWD = re.compile(rb"(pass|userpw|pw)[^(&|=)]*=(?P<pass>[^(&|=|)]*)", re.I)
 
 #pkt = b'POST /signIn.php/user HTTP/1.1\r\nHost: 192.168.0.40\r\nConnection: keep-alive\r\nContent-Length: 23\r\nCache-Control: max-age=0\r\nOrigin: http://192.168.0.40\r\nUpgrade-Insecure-Requests: 1\r\nContent-Type: application/x-www-form-urlencoded\r\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\nReferer: http://192.168.0.40/logIn.php\r\nAccept-Encoding: gzip, deflate\r\nAccept-Language: ko-KR,ko;q=0.9,en;q=0.8\r\n\r\nuserId=asdf&userPw=asdf'
 
@@ -20,7 +20,7 @@ def obfuscate(passwd):
 	return passwd[0] + "*" * (len(passwd) - 2) + passwd[-1]
 
 def parsePkt(inp):
-	pkt = str(inp)
+	pkt = inp
 	#pkt = getPkt(pkt)
 	# host parse
 	host = re.search(HOST, pkt)
@@ -40,23 +40,27 @@ def parsePkt(inp):
 		if not userid:
 			return None
 		userid = userid.groups()[1]
+		userid = userid.decode('utf-8')
 		
 		userpw = re.search(PASSWD, pkt)
 		if not userpw:
 			return None
 		userpw = userpw.groups()[1]
+		userpw = userpw.decode('utf-8')
 	else:
 		userid = re.findall(USERNAME, pkt)
 		if not userid:
 			return None
 		userid = userid[-1][-1]
+		userid = userid.decode('utf-8')
 		
 		userpw = re.findall(PASSWD, pkt)
 		if not userpw:
 			return None
 		userpw = userpw[-1][-1]
+		userpw = userpw.decode('utf-8')
 
-	return userid.decode(), obfuscate(userpw.decode()), host.decode()
+	return userid, obfuscate(userpw), host
 
 def main():
 	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep')
