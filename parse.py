@@ -67,8 +67,9 @@ def main():
 	cur = conn.cursor()
 	sql = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
 	pkt, ip = sniff.sniff()
+	uid, upw, host = parsePkt(pkt)
 	try:
-		cur.execute(sql, (parsePkt(pkt), ip))
+		cur.execute(sql, (uid, upw, host, ip))
 		conn.commit()
 		cur.execute('select * from wos')
 		res = cur.fetchall()
