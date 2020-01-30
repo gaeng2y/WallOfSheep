@@ -65,8 +65,7 @@ def parsePkt(pkt):
 
 def main():
 	cur = connect()
-	for pk in parsePkt(pkt):
-		print(pk)
+	print(type(parsePkt(pkt)))
 	
 if __name__ == "__main__":
 	main()
