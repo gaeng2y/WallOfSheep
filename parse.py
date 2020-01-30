@@ -60,11 +60,10 @@ def parsePkt(pkt):
 def main():
 	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep')
 	cur = conn.cursor()
-
 	sql = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
 	pkt, ip = sniff.sniff()
 	try:
-		cur.execute(sql, parsePkt(pkt), ip)
+		cur.execute(sql, (parsePkt(pkt), ip))
 		conn.commit()
 		cur.execute('select * from wos')
 		res = cur.fetchall()
