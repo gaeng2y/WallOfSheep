@@ -67,6 +67,8 @@ def main():
 	
 	try:
 		cur.execute("select * from wos")
+		res = cur.fetchone()
+		print(res)
 	finally:
 		cur.close()
 	
