@@ -60,12 +60,12 @@ def parsePkt(pkt):
 			return None
 		userpw = userpw[-1][-1]
 
-	return (host, userid, obfuscate(userpw))
+	return (userid, obfuscate(userpw), host)
 
 def main():
 	cur = connect()
 	sql = 'INSERT into wos(id, pw, ip, host, cookie) values(%s, %s, %s, %s, %s)'
-	cur.execute(sql, (parsePkt(pkt)[1], parsePkt(pkt)[2], '127.0.0.1', parsePkt(pkt)[0], 'cookie')
+	cur.execute(sql, (parsePkt(pkt)[0], parsePkt(pkt)[1], '127.0.0.1', parsePkt(pkt)[2s], 'cookie'))
 
 	
 if __name__ == "__main__":
