@@ -28,8 +28,8 @@ def u_ip(packet):
 def u_tcp(packet):
     return struct.unpack('!H H 2H 2H H H H H', packet)
 
-def sniff(network_interface):
-    sniffer = pcap.pcap(name=network_interface, promisc=True, immediate=True, timeout_ms=50)
+def sniff():
+    sniffer = pcap.pcap(name=None, promisc=True, immediate=True, timeout_ms=50)
 
     for ts, pkt in sniffer:    
         dst_mac, src_mac, eth_type = u_ethernet(pkt[:14])            
