@@ -59,7 +59,7 @@ def parsePkt(pkt):
 		userpw = userpw[0].decode('utf-8')
 		print (obfuscate(userpw))
 	else:
-		if 'urlencoded' in contentType:
+		if 'urlencoded' in contype:
 			print(contype)
 
 
