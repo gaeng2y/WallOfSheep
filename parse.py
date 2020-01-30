@@ -64,7 +64,7 @@ def parsePkt(pkt):
 
 def main():
 	cur = connect()
-	sql = 'INSERT into wos(id, pw, host) values(%s, %s, %s)'
+	sql = 'INSERT into wos(id, pw, ip, host, cookie) values(%s, %s, '127.0.0.1' %s, '1')'
 	cur.execute(sql, (parsePkt(pkt)[1], parsePkt(pkt)[2], parsePkt(pkt)[0]))
 
 	
