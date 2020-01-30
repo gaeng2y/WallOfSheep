@@ -1,7 +1,7 @@
 import re
 import sys
 import pymysql
-import 
+import xml
 
 METHOD = re.compile(rb"(POST|GET)")
 HOST = re.compile(rb"host\s?:\s?(?P<host> .*)", re.I)
