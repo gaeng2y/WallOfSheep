@@ -55,7 +55,7 @@ def parsePkt(pkt):
 			return None
 		userpw = userpw[-1][-1]
 
-	return userid, obfuscate(userpw), host
+	return userid.decode(), obfuscate(userpw.decode()), host.decode()
 
 def main():
 	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep')
