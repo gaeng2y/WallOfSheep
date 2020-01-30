@@ -58,13 +58,13 @@ def parsePkt(pkt):
 
 def main():
 	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep')
-	conn.autocommit = True
 	cur = conn.cursor()
 
 	sql = 'INSERT into wos(id, pw, ip, host) values(%s, %s, %s, %s)'
 	
 	try:
 		cur.execute(sql, (parsePkt(pkt)[0], parsePkt(pkt)[1], '127.0.0.1', parsePkt(pkt)[2]))
+		conn.commit()
 		cur.execute('select * from wos')
 		res = cur.fetchall()
 		print(res)
