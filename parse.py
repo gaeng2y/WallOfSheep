@@ -1,6 +1,6 @@
 import re
 import sys
-#import pymysql
+import pymysql
 import xml
 
 METHOD = re.compile(r"(POST|GET)")
@@ -55,7 +55,6 @@ def parsePkt(pkt):
 			return None
 		#userid = userid.groups()
 		userid = userid[-1][-1]
-		print(userid)
 		
 		userpw = re.findall(PASSWD, pkt)
 		if not userpw:
