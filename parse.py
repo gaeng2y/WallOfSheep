@@ -57,7 +57,7 @@ def parsePkt(pkt):
 	return (userid, obfuscate(userpw), host)
 
 def main():
-	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep', charset='utf8')
+	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep')
 	conn.autocommit = True
 	cur = conn.cursor()
 
