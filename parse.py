@@ -19,7 +19,8 @@ def getPkt(pkt):
 def obfuscate(passwd):
 	return passwd[0] + "*" * (len(passwd) - 2) + passwd[-1]
 
-def parsePkt(pkt):
+def parsePkt(inp):
+	pkt = str(inp)
 	#pkt = getPkt(pkt)
 	# host parse
 	host = re.search(HOST, pkt)
