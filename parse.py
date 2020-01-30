@@ -65,11 +65,14 @@ def parsePkt(pkt):
 def main():
 	cur = connect()
 	sql = 'INSERT into wos(id, pw, ip, host, cookie) values(%s, %s, %s, %s, %s)'
-	cur.execute(sql, (parsePkt(pkt)[1], parsePkt(pkt)[2], '127.0.0.1', parsePkt(pkt)[0]), 'cookie')
+	cur.execute(sql, (parsePkt(pkt)[1], parsePkt(pkt)[2], '127.0.0.1', parsePkt(pkt)[0], 'cookie')
 
 	
 if __name__ == "__main__":
 	main()
+
+
+
 '''
 POST /index.php HTTP/1.1
 Host: gilgil.net
