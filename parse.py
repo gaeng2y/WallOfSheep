@@ -60,14 +60,14 @@ def parsePkt(inp):
 		userpw = userpw[-1][-1]
 		userpw = userpw.decode('utf-8')
 
-	return userid, obfuscate(userpw), host
+	return (userid, obfuscate(userpw), host)
 
 def main():
 	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep')
 	cur = conn.cursor()
 	sql = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
 	pkt, ip = sniff.sniff()
-	uid, upw, host = parsePkt(pkt)
+	uid, upw, host = parsePkt(pkt)[0], parsePkt(pkt)[1], parsePkt(pkt)[2] 
 	try:
 		cur.execute(sql, (uid, upw, host, ip))
 		conn.commit()
