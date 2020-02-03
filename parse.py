@@ -7,7 +7,7 @@ import sniff
 METHOD = re.compile(r"(POST|GET)")
 HOST = re.compile(r"host\s?:\s?(?P<host> .*)", re.I)
 CONTYPE = re.compile(r"content-type\s?:\s?(?P<contenttype> .*)", re.I)
-USERNAME = re.compile(r"(userId|login|m_id|id)[^(&|=)]*=(?P<username>[^(&|=)]*)", re.I)
+USERNAME = re.compile(r"(userId|m_id|id)[^(&|=)]*=(?P<username>[^(&|=)]*)", re.I)
 PASSWD = re.compile(r"(pass|userPw|pw)[^(&|=)]*=(?P<pass>[^(&|=|)]*)", re.I)
 
 #pkt = b'POST /signIn.php/user HTTP/1.1\r\nHost: 192.168.0.40\r\nConnection: keep-alive\r\nContent-Length: 23\r\nCache-Control: max-age=0\r\nOrigin: http://192.168.0.40\r\nUpgrade-Insecure-Requests: 1\r\nContent-Type: application/x-www-form-urlencoded\r\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\nReferer: http://192.168.0.40/logIn.php\r\nAccept-Encoding: gzip, deflate\r\nAccept-Language: ko-KR,ko;q=0.9,en;q=0.8\r\n\r\nuserId=asdf&userPw=asdf'
