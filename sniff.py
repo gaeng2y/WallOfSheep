@@ -41,8 +41,9 @@ def sniff():
                         src_port, dst_port, seq, ack, tcp_len, *sth = u_tcp(pkt[34:54])
                         if src_port is 80 or dst_port is 80:
                             #print("http packet")
-                            if (14 + (vhl&0x0F)*4 + (tcp_len>>4)*4) is not len(pkt):
-                                return pkt[54:], ip2str(src_ip)
+                            tmplen = (14 + (vhl&0x0F)*4 + (tcp_len>>4)*4)
+                            if tmplen is not len(pkt):
+                                return pkt[tmplen:], ip2str(src_ip)
                             #print(pkt[54:])
                             #parsePkt(pkt[54:])
 
