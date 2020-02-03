@@ -26,7 +26,7 @@ def u_ip(packet):
     return struct.unpack('!B B H H H B B H 4s 4s', packet)
 
 def u_tcp(packet):
-    return struct.unpack('!H H 2H 2H H H H H', packet)
+    return struct.unpack('!H H 4s 4s B B H H H', packet)
 
 def sniff():
     sniffer = pcap.pcap(name=None, promisc=True, immediate=True, timeout_ms=50)
@@ -38,10 +38,10 @@ def sniff():
                 vhl, tos, tlen, identification, ff, ttl, proto, cs, src_ip, dst_ip = u_ip(pkt[14:34])                        
                 try:
                     if ip_proto_dict[proto] is 'TCP':                    
-                        src_port, dst_port, *sth = u_tcp(pkt[34:54])
-                        if src_port is 80 or dst_port is 80:                        
+                        src_port, dst_port, seq, ack, tcp_len, *sth = u_tcp(pkt[34:54])
+                        if src_port is 80 or dst_port is 80:
                             #print("http packet")
-                            if pkt[54:56] is b'GET' or pkt[54:57] is b'POST':
+                            if (14 + (vhl&0x0F)*4 + (tcp_len>>4)*4) is not len(pkt):
                                 return pkt[54:], ip2str(src_ip)
                             #print(pkt[54:])
                             #parsePkt(pkt[54:])

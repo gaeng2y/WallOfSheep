@@ -1,0 +1,3 @@
+import sniff
+
+sniff.sniff()
