@@ -43,6 +43,7 @@ def sniff():
                             #print("http packet")
                             tmplen = (14 + (vhl&0x0F)*4 + (tcp_len>>4)*4)
                             if tmplen is not len(pkt):
+                                print(pkt[tmplen:])
                                 return pkt[tmplen:], ip2str(src_ip)
                             #print(pkt[54:])
                             #parsePkt(pkt[54:])
