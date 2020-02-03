@@ -23,7 +23,6 @@ def obfuscate(passwd):
 def parsePkt(inp):
 	pkt = getPkt(inp)
 
-
 	# host parse
 	host = re.search(HOST, pkt)
 	if not host:

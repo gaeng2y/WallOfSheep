@@ -42,6 +42,7 @@ def sniff():
                         if src_port is 80 or dst_port is 80:
                             #print("http packet")
                             if (14 + (vhl&0x0F)*4 + (tcp_len>>4)*4) is not len(pkt):
+                                print(pkt[54:])
                                 return pkt[54:], ip2str(src_ip)
                             #print(pkt[54:])
                             #parsePkt(pkt[54:])
