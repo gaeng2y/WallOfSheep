@@ -14,7 +14,6 @@ PASSWD = re.compile(r"(pass|userPw|pw)[^(&|=)]*=(?P<pass>[^(&|=|)]*)", re.I)
 
 def getPkt(pkt):
 	pkt = pkt.decode('utf-8')
-	print(pkt)
 	return pkt
 
 def obfuscate(passwd):
