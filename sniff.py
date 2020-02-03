@@ -40,8 +40,8 @@ def sniff():
                     if ip_proto_dict[proto] is 'TCP':                    
                         src_port, dst_port, *sth = u_tcp(pkt[34:54])
                         if src_port is 80 or dst_port is 80:                        
-                            #print("http packet")
-                            print(pkt[54:])
+                            print("http packet")
+                            #print(pkt[54:])
                             return pkt[54:], ip2str(src_ip)
                             #print(pkt[54:])
                             #parsePkt(pkt[54:])
