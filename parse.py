@@ -48,9 +48,11 @@ def parsePkt(inp):
 		userpw = userpw.groups()[1]
 	else:
 		userid = re.findall(USERNAME, pkt)
+		print(userid)
 		if not userid:
 			return None
-		userid = userid[-1][0]
+		userid = userid[-1][-1]
+
 		
 		userpw = re.findall(PASSWD, pkt)
 		if not userpw:
@@ -58,6 +60,9 @@ def parsePkt(inp):
 		userpw = userpw[-1][-1]
 
 	return (userid, obfuscate(userpw), host)
+
+def countAdd(host):
+
 
 def main():
 	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep')
