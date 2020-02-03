@@ -14,6 +14,7 @@ PASSWD = re.compile(r"(pass|userpw|pw)[^(&|=)]*=(?P<pass>[^(&|=|)]*)", re.I)
 
 def getPkt(pkt):
 	pkt = pkt.decode('utf-8')
+	print(pkt)
 	return pkt
 
 def obfuscate(passwd):
@@ -21,6 +22,7 @@ def obfuscate(passwd):
 
 def parsePkt(inp):
 	pkt = getPkt(inp)
+
 
 	# host parse
 	host = re.search(HOST, pkt)
