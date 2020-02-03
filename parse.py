@@ -47,7 +47,7 @@ def parsePkt(inp):
 			return None
 		userpw = userpw.groups()[1]
 	else:
-		userid = re.findall(USERNAME, pkt)
+		userid = re.search(USERNAME, pkt)
 		print(userid)
 		if not userid:
 			return None
