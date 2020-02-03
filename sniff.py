@@ -28,6 +28,14 @@ def u_ip(packet):
 def u_tcp(packet):
     return struct.unpack('!H H 2H 2H H H H H', packet)
 
+def dump(packet):
+    print()
+    for i in range(len(packet)):
+        print(" %02X" % packet[i], end="")
+        if i % 16 is 15:
+            print()
+    print()
+
 def sniff():
     sniffer = pcap.pcap(name=None, promisc=True, immediate=True, timeout_ms=50)
 
@@ -41,7 +49,7 @@ def sniff():
                         src_port, dst_port, *sth = u_tcp(pkt[34:54])
                         if src_port is 80 or dst_port is 80:                        
                             print("http packet")
-                            #print(pkt[54:])
+                            dump(pkt[54:])
                             return pkt[54:], ip2str(src_ip)
                             #print(pkt[54:])
                             #parsePkt(pkt[54:])
