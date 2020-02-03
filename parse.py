@@ -64,7 +64,7 @@ def parsePkt(inp):
 	return (userid, obfuscate(userpw), host)
 
 def countAdd(host):
-
+	pass
 
 def main():
 	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep')
