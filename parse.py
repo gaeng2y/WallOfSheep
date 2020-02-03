@@ -50,7 +50,7 @@ def parsePkt(inp):
 		userid = re.findall(USERNAME, pkt)
 		if not userid:
 			return None
-		userid = userid[-1][-1]
+		userid = userid[-1][0]
 		
 		userpw = re.findall(PASSWD, pkt)
 		if not userpw:
@@ -69,6 +69,7 @@ def main():
 		uid, upw, host = rlt[0], rlt[1], rlt[2]
 		if rlt is not None:
 			try:
+				print (uid, upw, host)
 				cur.execute(sql, (uid, upw, host, ip))
 				conn.commit()
 				cur.execute('select * from wos')
