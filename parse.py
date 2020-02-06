@@ -122,4 +122,3 @@ Cookie: sso=b2376caddca77ededbf960854d5826b3; PHPSESSID=078ec0f95a93d98f744d24ea
 </params>
 </methodCall>
 '''
-# 헤더에서 xml이면 xml 분석 모듈을 이용해서 
