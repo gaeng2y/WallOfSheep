@@ -61,27 +61,34 @@ def parsePkt(inp):
 
 	return (userid, obfuscate(userpw), host)
 
-def countAdd(host):
-	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep')
-	cur = conn.connet()
-	
+def insertInfo(conn, cur, id, pw, ip, host):
+	querry = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
+	print (id, pw, ip, host)
+	cur.execute(querry, (id, pw, ip, host))
+	conn.commit()
+	cur.execute('select * from wos ORDER BY no DESC limit 1')
+	res = cur.fetchall()
+	print(res)
+
+def cntHost(conn, cur, host):
+	querry = "SELECT host, count from count"
+	cur.execute(querry)
+	res = cur.fetchall()
+	print(res)
+
 
 def main():
-	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep')
+	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep', charset='utf8')
 	cur = conn.cursor()
-	sql = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
+	
 	while(True):
 		pkt1, ip = sniff.sniff()
 		rlt = parsePkt(pkt)
 		uid, upw, host = rlt[0], rlt[1], rlt[2]
 		if rlt is not None:
 			try:
-				print (uid, upw, ip, host)
-				cur.execute(sql, (uid, upw, host, ip))
-				conn.commit()
-				cur.execute('select * from wos ORDER BY no DESC limit 1')
-				res = cur.fetchall()
-				print(res)
+				insertInfo(conn, cur, uid, upw, ip, host)
+				cntHost(conn, cur, host)
 			finally:
 				conn.close()
 
