@@ -77,6 +77,7 @@ def main():
 	
 	while(True):
 		pkt, ip = sniff.sniff()
+		print(pkt)
 		rlt = parsePkt(pkt)
 		if rlt is not None:
 			uid, upw, host = rlt[0], rlt[1], rlt[2]
