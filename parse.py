@@ -84,8 +84,8 @@ def main():
 	while(True):
 		pkt, ip = sniff.sniff()
 		rlt = parsePkt(pkt)
-		uid, upw, host = rlt[0], rlt[1], rlt[2]
 		if rlt is not None:
+			uid, upw, host = rlt[0], rlt[1], rlt[2]
 			try:
 				insertInfo(conn, cur, uid, upw, ip, host)
 				cntHost(conn, cur, host)
