@@ -76,7 +76,7 @@ def main():
 		uid, upw, host = rlt[0], rlt[1], rlt[2]
 		if rlt is not None:
 			try:
-				print (uid, upw, host)
+				print (uid, upw, ip, host)
 				cur.execute(sql, (uid, upw, host, ip))
 				conn.commit()
 				cur.execute('select * from wos ORDER BY no DESC limit 1')
