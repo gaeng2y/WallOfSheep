@@ -79,7 +79,7 @@ def main():
 				print (uid, upw, host)
 				cur.execute(sql, (uid, upw, host, ip))
 				conn.commit()
-				cur.execute('select * from wos')
+				cur.execute('select * from wos ORDER BY no DESC limit 1')
 				res = cur.fetchall()
 				print(res)
 			finally:
