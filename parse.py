@@ -22,7 +22,7 @@ def insertInfo(conn, cur, id, pw, ip, host):
 	conn.commit()
 	cur.execute('select * from wos ORDER BY no DESC limit 1')
 	hostres = cur.fetchall()
-	res = hostres[0]
+	res = hostres[0][0]
 	print(res)
 
 def cntHost(conn, cur, host):
