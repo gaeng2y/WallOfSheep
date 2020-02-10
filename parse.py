@@ -58,7 +58,7 @@ def parsePkt(pkt):
 		if not userpw:
 			return None
 		userpw = userpw[-1][-1]
-		print(uesrpw)
+		print(userpw)
 
 	return (userid, obfuscate(userpw), host)
 
