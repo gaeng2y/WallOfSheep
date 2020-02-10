@@ -33,10 +33,19 @@ def cntHost(conn, cur, host):
 	print(type(cntRes))
 	'''
 	hostquery = 'SELECT EXISTS (SELECT * FROM count WHERE host = %s) as success'
-	cur.execute(hostquery, (host))
+	cur.execute(hostquery, host)
 	res = cur.fetchall()
-	print(res[0][0])
-
+	if res[0][0] == '0':
+		query = 'INSERT into count(host) values(%s)'
+		cur.execute(query, host)
+		cur.execute('select * from count')
+		res = cur.fetchall()
+		print(res)
+	else:
+		query = 'SELECT count from count'
+		cur.execute(query)
+		res = cur.fetchall()
+		print(res)
 def parsePkt(pkt):
 	# host parse
 	host = re.search(HOST, pkt)
