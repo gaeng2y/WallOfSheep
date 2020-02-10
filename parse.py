@@ -41,7 +41,7 @@ def cntHost(conn, cur, host):
 		res = res[0][0]
 		res += 1
 		query = 'UPDATE count SET count = %s WHERE host = %s'
-		cur.execute(qeury, res, host)
+		cur.execute(qeury, (res, host))
 		conn.commit()
 		print("count update suc")
 
