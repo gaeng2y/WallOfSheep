@@ -38,7 +38,7 @@ def sniff():
                 try:
                     if ip_proto_dict[proto] is 'TCP':                    
                         src_port, dst_port, seq, ack, tcp_len, *sth = u_tcp(pkt[34:54])
-                        if src_port is 80 or dst_port is 80:
+                        if dst_port is 80:
                             #print("http packet")
                             tmplen = (14 + (vhl&0x0F)*4 + (tcp_len>>4)*4)
                             if tmplen is not len(pkt):
