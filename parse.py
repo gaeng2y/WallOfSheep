@@ -68,7 +68,6 @@ def parsePkt(pkt):
 			if not userid:
 				return None
 			userid = userid[-1][-1]
-			print(userid)
 			
 			userpw = re.findall(PASSWD, pkt)
 			if not userpw:
@@ -90,8 +89,8 @@ def main():
 		if rlt is not None:
 			uid, upw, host = rlt[0], rlt[1], rlt[2]
 			try:
-				#insertInfo(conn, cur, uid, upw, ip, host)
-				#cntHost(conn, cur, host)
+				insertInfo(conn, cur, uid, upw, ip, host)
+				cntHost(conn, cur, host)
 				print(uid, upw, host,ip)
 			except Exception:
 				pass
