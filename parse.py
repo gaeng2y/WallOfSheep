@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import sniff
 
 METHOD = re.compile(rb"(POST|GET)")
-HOST = re.compile(rb"host\s?:\s?(?P<host> .*)", re.I)
+HOST = re.compile(rb"host\s?:\s?(?P<host>[^(\r)]*)", re.I)
 CONTYPE = re.compile(rb"content-type\s?:\s?(?P<contenttype> .*)", re.I)
 #USERNAME = re.compile(r"(userId|m_id|id)[^(&|=)]*=(?P<username>[^(&|=)]*)", re.I)
 USERNAME = re.compile(rb"(os_id|userid|login|m_id|id|user_id)=(?P<username>[^(&|=)]*)", re.I)
