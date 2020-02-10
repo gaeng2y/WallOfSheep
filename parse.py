@@ -40,6 +40,7 @@ def cntHost(conn, cur, host):
 def parsePkt(pkt):
 	# host parse
 	host = re.search(HOST, pkt)
+	if not host:
 		return None
 	host = host.groups()[0]
 	host = host.decode()
