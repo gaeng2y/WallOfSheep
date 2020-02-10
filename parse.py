@@ -24,35 +24,41 @@ def parsePkt(pkt):
 		return None
 	host = host.groups()[0]
 	host = host.strip()
+	print (host)
 
 	# method call
 	method = re.search(METHOD, pkt)
 	if not method:
 		return None
 	method = method.groups()[0]
+	print(method)
 
 	# get | post 
-	if method == 'GET':
+	if method == b'GET':
 		userid = re.search(USERNAME, pkt)
 		if not userid:
 			return None
 		userid = userid.groups()[1]
-		
+		print(userid)
+
 		userpw = re.search(PASSWD, pkt)
 		if not userpw:
 			return None
 		userpw = userpw.groups()[1]
+		print(userpw)
+
 	else:
 		userid = re.findall(USERNAME, pkt)
 		if not userid:
 			return None
 		userid = userid[-1][-1]
-
+		print(userid)
 		
 		userpw = re.findall(PASSWD, pkt)
 		if not userpw:
 			return None
 		userpw = userpw[-1][-1]
+		print(uesrpw)
 
 	return (userid, obfuscate(userpw), host)
 
@@ -82,8 +88,9 @@ def main():
 		if rlt is not None:
 			uid, upw, host = rlt[0], rlt[1], rlt[2]
 			try:
-				insertInfo(conn, cur, uid, upw, ip, host)
-				cntHost(conn, cur, host)
+				#insertInfo(conn, cur, uid, upw, ip, host)
+				#cntHost(conn, cur, host)
+				print(rlt,ip)
 			finally:
 				conn.close()
 
