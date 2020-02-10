@@ -52,14 +52,12 @@ def parsePkt(pkt):
 		if not userid:
 			return None
 		userid = userid.groups()[1]
-		userid = userid.decode()
 		#print(userid)
 
 		userpw = re.search(PASSWD, pkt)
 		if not userpw:
 			return None
 		userpw = userpw.groups()[1]
-		userid = userid.decode()
 		#print(userpw)
 	# post => last value
 	else:
@@ -67,14 +65,12 @@ def parsePkt(pkt):
 		if not userid:
 			return None
 		userid = userid[-1][-1]
-		userid = userid.decode()
 		#print(userid)
 		
 		userpw = re.findall(PASSWD, pkt)
 		if not userpw:
 			return None
 		userpw = userpw[-1][-1]
-		userid = userid.decode()
 		#print(userpw)
 
 	return (userid, obfuscate(userpw), host)
@@ -90,9 +86,9 @@ def main():
 		if rlt is not None:
 			uid, upw, host = rlt[0], rlt[1], rlt[2]
 			try:
-				insertInfo(conn, cur, uid, upw, ip, host)
-				cntHost(conn, cur, host)
-				#print(rlt,ip)
+				#insertInfo(conn, cur, uid, upw, ip, host)
+				#cntHost(conn, cur, host)
+				print(rlt,ip)
 			finally:
 				conn.close()
 
