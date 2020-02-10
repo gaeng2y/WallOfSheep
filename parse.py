@@ -15,8 +15,8 @@ def obfuscate(passwd):
 	return passwd[0] + "*" * (len(passwd) - 2) + passwd[-1]
 
 def insertInfo(conn, cur, id, pw, ip, host):
-	query = 'INSERT into wos (id, pw, host, ip) values(%s, %s, %s, %s)'
-	cur.execute(query, (id, pw, host, ip))
+	query = 'INSERT into wos (id, pw, host, ip, mac) values(%s, %s, %s, %s)'
+	cur.execute(query, (id, pw, host, ip, mac))
 	conn.commit()
 	print("Success Insert")
 
