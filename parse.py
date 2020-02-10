@@ -12,6 +12,10 @@ PASSWD = re.compile(rb"(pass|userpw|pw|user_pw)[^(&|=)]*=(?P<pass>[^(&|=|\')]*)"
 
 #pkt = b'POST /signIn.php/user HTTP/1.1\r\nHost: 192.168.0.40\r\nConnection: keep-alive\r\nContent-Length: 23\r\nCache-Control: max-age=0\r\nOrigin: http://192.168.0.40\r\nUpgrade-Insecure-Requests: 1\r\nContent-Type: application/x-www-form-urlencoded\r\nUser-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\nReferer: http://192.168.0.40/logIn.php\r\nAccept-Encoding: gzip, deflate\r\nAccept-Language: ko-KR,ko;q=0.9,en;q=0.8\r\n\r\nuserId=asdf&userPw=1234'
 
+def obfuscate(passwd):
+	passwd = passwd.decode()
+	return passwd[0] + "*" * (len(passwd) - 2) + passwd[-1]
+
 def insertInfo(conn, cur, id, pw, ip, host):
 	querry = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
 	print (id, pw, ip, host)
@@ -26,9 +30,6 @@ def cntHost(conn, cur, host):
 	cur.execute(querry)
 	res = cur.fetchall()
 	print(res)
-
-def obfuscate(passwd):
-	return passwd[0] + "*" * (len(passwd) - 2) + passwd[-1]
 
 def parsePkt(pkt):
 	# host parse
@@ -68,14 +69,11 @@ def parsePkt(pkt):
 			if not userid:
 				return None
 			userid = userid[-1][-1]
-			print(userid)
 			
 			userpw = re.findall(PASSWD, pkt)
 			if not userpw:
 				return None
 			userpw = userpw[-1][-1]
-			print(userpw)
-			print(type(userpw))
 			#userpw = str(userpw)
 		#print(userpw)
 
