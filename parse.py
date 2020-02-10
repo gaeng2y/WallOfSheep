@@ -30,7 +30,7 @@ def cntHost(conn, cur, host):
 	print(hostRes)
 	cur.execute('SELECT count from count')
 	cntRes = cur.fetchall()
-	print(curRes)
+	print(cntRes)
 
 def parsePkt(pkt):
 	# host parse
