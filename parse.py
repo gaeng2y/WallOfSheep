@@ -85,7 +85,7 @@ def main():
 	cur = conn.cursor()
 	
 	while(True):
-		pkt1, ip = sniff.sniff()
+		pkt, ip = sniff.sniff()
 		rlt = parsePkt(pkt)
 		if rlt is not None:
 			uid, upw, host = rlt[0], rlt[1], rlt[2]
