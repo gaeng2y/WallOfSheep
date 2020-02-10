@@ -104,7 +104,7 @@ def main():
 			uid, upw, host = rlt[0], rlt[1], rlt[2]
 			try:
 				print(uid, upw, host, ip, mac)
-				insertInfo(conn, cur, uid, upw, ip, host)
+				insertInfo(conn, cur, uid, upw, ip, host, mac)
 				cntHost(conn, cur, host)
 			except Exception:
 				pass
