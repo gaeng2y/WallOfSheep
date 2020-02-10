@@ -23,18 +23,18 @@ def insertInfo(conn, cur, id, pw, ip, host):
 	print("Success Insert")
 
 def cntHost(conn, cur, host):
-	query = 'SELECT EXISTS (SELECT * FROM rank WHERE host = %s) as success'
+	query = 'SELECT EXISTS (SELECT * FROM count WHERE host = %s) as success'
 	cur.execute(query, host)
 	res = cur.fetchall()
 	res = res[0][0]
 
 	if (res == 0):
-		query = 'INSERT into rank(host, count) values(%s, %s)'
-		cur.execute(query, (host, 1))
+		query = 'INSERT into count(host, count) values(%s, %s)'
+		cur.execute(query, (host, '1'))
 		conn.commit()
 		print("count insert success")
 	else:
-		query = 'SELECT count from rank'
+		query = 'SELECT count from count'
 		cur.execute(query)
 		res = cur.fetchall()
 		print(res)
