@@ -90,8 +90,8 @@ def main():
 		if rlt is not None:
 			uid, upw, host = rlt[0], rlt[1], rlt[2]
 			try:
-				#insertInfo(conn, cur, uid, upw, ip, host)
-				#cntHost(conn, cur, host)
+				insertInfo(conn, cur, uid, upw, ip, host)
+				cntHost(conn, cur, host)
 				print(rlt,ip)
 			except Exception:
 				pass
