@@ -29,7 +29,7 @@ def cntHost(conn, cur, host):
 	if res[0][0] == 0:
 		query = 'INSERT into count(host) values(%s)'
 		cur.execute(query, host)
-		cur.execute('select * from count')
+		cur.execute('SELECT * FROM wos')
 		res = cur.fetchall()
 		print(res)
 	else:
@@ -40,7 +40,6 @@ def cntHost(conn, cur, host):
 def parsePkt(pkt):
 	# host parse
 	host = re.search(HOST, pkt)
-	if not host:
 		return None
 	host = host.groups()[0]
 	host = host.decode()
