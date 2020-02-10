@@ -1,6 +1,7 @@
 import re
 import sys
 import pymysql
+import xml.etree.ElementTree as ET
 import sniff
 
 METHOD = re.compile(rb"(POST|GET)")
