@@ -43,7 +43,7 @@ def sniff():
                             tmplen = (14 + (vhl&0x0F)*4 + (tcp_len>>4)*4)
                             if tmplen is not len(pkt):
                                 #print(pkt[tmplen:])
-                                return pkt[tmplen:], ip2str(src_ip)
+                                return pkt[tmplen:], ip2str(src_ip), mac2str(src_mac)
 
                 except KeyError:                
                     pass
