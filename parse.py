@@ -29,9 +29,8 @@ def cntHost(conn, cur, host):
 	res = res[0][0]
 
 	if (res == 0):
-		query = 'INSERT into rank(host, count) values(%s, 1)'
-		print(query)
-		cur.execute(query, host)
+		query = 'INSERT into rank(host, count) values(%s, %d)'
+		cur.execute(query, (host, 1))
 		conn.commit()
 		print("count insert success")
 	else:
