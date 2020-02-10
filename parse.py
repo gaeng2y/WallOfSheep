@@ -68,6 +68,7 @@ def parsePkt(pkt):
 			if not userid:
 				return None
 			userid = userid[-1][-1]
+			print(userid)
 			
 			userpw = re.findall(PASSWD, pkt)
 			if not userpw:
