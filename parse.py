@@ -35,10 +35,15 @@ def cntHost(conn, cur, host):
 		conn.commit()
 		print("count insert success")
 	else:
-		query = 'SELECT count from count'
-		cur.execute(query)
+		query = 'SELECT count from count where host = %s'
+		cur.execute(query, host)
 		res = cur.fetchall()
-		print(res)
+		res = res[0][0]
+		res += 1
+		query = 'UPDATE count SET count = %s'
+		cur.execute(qeury, res)
+		conn.commit()
+		print("count update suc")
 
 def parsePkt(pkt):
 	# host parse
