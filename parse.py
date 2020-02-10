@@ -35,9 +35,9 @@ def cntHost(conn, cur, host):
 		conn.commit()
 		print("count insert success")
 	else:
-		query = 'SELECT count from count where host = %s'
+		query = 'SELECT count FROM count WHERE host = %s'
 		cur.execute(query, host)
-		cnt = cur.fetchall
+		cnt = cur.fetchall()
 		cnt = cnt[0][0]
 		print(cnt)
 		cnt += 1
