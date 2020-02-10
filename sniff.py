@@ -1,6 +1,5 @@
 import pcap
 import struct
-from parse import *
 
 eth_type_dict = {
     0x0800 : 'IP',
