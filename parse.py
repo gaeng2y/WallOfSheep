@@ -32,12 +32,13 @@ def cntHost(conn, cur, host):
 	cntRes = cur.fetchall()
 	print(type(cntRes))
 	'''
-	hostquery = 'SELECT EXISTS (SELECT * FROM count WHERE host = %s) as success'
-	cur.execute(hostquery, host)
+	query = 'SELECT EXISTS (SELECT * FROM count WHERE host = %s) as success'
+	cur.execute(query, (host))
 	res = cur.fetchall()
+	print(type(res[0][0]))
 	if res[0][0] == '0':
 		query = 'INSERT into count(host) values(%s)'
-		cur.execute(query, host)
+		cur.execute(query, (host))
 		cur.execute('select * from count')
 		res = cur.fetchall()
 		print(res)
