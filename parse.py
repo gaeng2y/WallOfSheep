@@ -28,7 +28,7 @@ def cntHost(conn, cur, host):
 	cur.execute(query, host)
 	res = cur.fetchall()
 	res = res[0][0]
-
+	print(res)
 	if (res == 0):
 		query = 'INSERT into count (host, count) values(%s, %s)'
 		cur.execute(query, (host, initcnt))
@@ -39,7 +39,9 @@ def cntHost(conn, cur, host):
 		cur.execute(query, host)
 		cnt = cur.fetchall
 		cnt = cnt[0][0]
+		print(cnt)
 		cnt += 1
+		print(cnt)
 		query = 'UPDATE count SET count = %s WHERE host = %s'
 		cur.execute(qeury, (cnt, host))
 		conn.commit()
