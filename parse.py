@@ -6,7 +6,7 @@ import sniff
 
 METHOD = re.compile(rb"(POST|GET)")
 HOST = re.compile(rb"host\s?:\s?(?P<host>[^(\r)]*)", re.I)
-CONTYPE = re.compile(rb"content-type\s?:\s?(?P<contenttype> .*)", re.I)
+CONTYPE = re.compile(rb"content-type\s?:\s?(?P<contenttype>[^(\r)]*)", re.I)
 USERNAME = re.compile(rb"(os_id|userid|login|m_id|id|user_id)=(?P<username>[^(&|=)]*)", re.I)
 PASSWD = re.compile(rb"(pass|userpw|pw|user_pw)[^(&|=)]*=(?P<pass>[^(&|=|\'')]*)", re.I)
 
@@ -60,17 +60,21 @@ def parsePkt(pkt):
 		#print(userpw)
 	# post => last value
 	else:
-		userid = re.findall(USERNAME, pkt)
-		if not userid:
-			return None
-		userid = userid[-1][-1]
-		#print(userid)
-		
-		userpw = re.findall(PASSWD, pkt)
-		if not userpw:
-			return None
-		userpw = userpw[-1][-1]
-		userpw = str(userpw)
+		contype = re.search(CONTYPE, pkt)
+		contype = contype.groups()[0]
+
+		if b'urlencoded' in contype:
+			userid = re.findall(USERNAME, pkt)
+			if not userid:
+				return None
+			userid = userid[-1][-1]
+			#print(userid)
+			
+			userpw = re.findall(PASSWD, pkt)
+			if not userpw:
+				return None
+			userpw = userpw[-1][-1]
+			userpw = str(userpw)
 		#print(userpw)
 
 	return (userid, obfuscate(userpw), host)
