@@ -30,7 +30,7 @@ def cntHost(conn, cur, host):
 	if res[0][0] == 0:
 		query = 'INSERT into count(host) values(%s)'
 		cur.execute(query, host)
-		cur.commit()
+		conn.commit()
 		cur.execute('SELECT * FROM wos')
 		res = cur.fetchall()
 		print(res)
@@ -103,8 +103,8 @@ def main():
 				#print(uid, upw, host,ip)
 			except Exception:
 				pass
-			finally:
-				conn.close()
+
+	conn.close()
 
 	
 if __name__ == "__main__":
