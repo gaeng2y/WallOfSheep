@@ -30,7 +30,7 @@ def cntHost(conn, cur, host):
 	res = res[0][0]
 
 	if (res == 0):
-		query = 'INSERT into count (host, count) values(%s, %d)'
+		query = 'INSERT into count (host, count) values(%s, %s)'
 		cur.execute(query, (host, cnt))
 		conn.commit()
 		print("count insert success")
