@@ -20,25 +20,15 @@ def insertInfo(conn, cur, id, pw, ip, host):
 	query = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
 	cur.execute(query, (id, pw, ip, host))
 	conn.commit()
-	cur.execute('select * from wos ORDER BY no DESC limit 1')
-	res = cur.fetchall()
-	print(res)
 
 def cntHost(conn, cur, host):
-	'''
-	cur.execute('SELECT host from count')
-	hostRes = cur.fetchall()
-	cur.execute('SELECT count from count')
-	cntRes = cur.fetchall()
-	print(type(cntRes))
-	'''
 	query = 'SELECT EXISTS (SELECT * FROM count WHERE host = %s) as success'
-	cur.execute(query, (host))
+	cur.execute(query, host)
 	res = cur.fetchall()
 
 	if res[0][0] == 0:
 		query = 'INSERT into count(host) values(%s)'
-		cur.execute(query, (host))
+		cur.execute(query, host)
 		cur.execute('select * from count')
 		res = cur.fetchall()
 		print(res)
