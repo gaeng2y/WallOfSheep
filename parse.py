@@ -73,6 +73,7 @@ def parsePkt(pkt):
 			if not userpw:
 				return None
 			userpw = userpw[-1][-1]
+			print(userpw)
 			print(type(userpw))
 			#userpw = str(userpw)
 		#print(userpw)
