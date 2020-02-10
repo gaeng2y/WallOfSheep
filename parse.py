@@ -21,8 +21,7 @@ def insertInfo(conn, cur, id, pw, ip, host):
 	cur.execute(query, (id, pw, ip, host))
 	conn.commit()
 	cur.execute('select * from wos ORDER BY no DESC limit 1')
-	hostres = cur.fetchall()
-	res = hostres[0][0]
+	res = cur.fetchall()
 	print(res)
 
 def cntHost(conn, cur, host):
@@ -36,7 +35,7 @@ def cntHost(conn, cur, host):
 	hostquery = 'SELECT EXISTS (SELECT * FROM count WHERE host = %s) as success'
 	cur.execute(hostquery, (host))
 	res = cur.fetchall()
-	print(res)
+	print(res[0][0])
 
 def parsePkt(pkt):
 	# host parse
