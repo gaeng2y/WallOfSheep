@@ -20,6 +20,7 @@ def insertInfo(conn, cur, id, pw, ip, host):
 	query = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
 	cur.execute(query, (id, pw, ip, host))
 	conn.commit()
+	print("Success Insert")
 
 def cntHost(conn, cur, host):
 	query = 'SELECT EXISTS (SELECT * FROM count WHERE host = %s) as success'
