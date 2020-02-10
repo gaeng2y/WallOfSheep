@@ -17,7 +17,7 @@ def obfuscate(passwd):
 	return passwd[0] + "*" * (len(passwd) - 2) + passwd[-1]
 
 def insertInfo(conn, cur, id, pw, ip, host):
-	query = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
+	query = 'INSERT into wos (id, pw, host, ip) values(%s, %s, %s, %s)'
 	cur.execute(query, (id, pw, ip, host))
 	conn.commit()
 	print("Success Insert")
@@ -30,7 +30,7 @@ def cntHost(conn, cur, host):
 	res = res[0][0]
 
 	if (res == 0):
-		query = 'INSERT into count(host, count) values(%s, %d)'
+		query = 'INSERT into count (host, count) values(%s, %d)'
 		cur.execute(query, (host, cnt))
 		conn.commit()
 		print("count insert success")
@@ -39,6 +39,7 @@ def cntHost(conn, cur, host):
 		cur.execute(query)
 		res = cur.fetchall()
 		print(res)
+
 def parsePkt(pkt):
 	# host parse
 	host = re.search(HOST, pkt)
@@ -109,30 +110,3 @@ def main():
 	
 if __name__ == "__main__":
 	main()
-
-
-
-'''
-POST /index.php HTTP/1.1
-Host: gilgil.net
-Connection: keep-alive
-Content-Length: 275
-Origin: http://gilgil.net
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36
-Content-Type: text/plain;charset=UTF-8
-Accept: */*
-Referer: http://gilgil.net/
-Accept-Encoding: gzip, deflate
-Accept-Language: ko-KR,ko;q=0.9,en;q=0.8
-Cookie: sso=b2376caddca77ededbf960854d5826b3; PHPSESSID=078ec0f95a93d98f744d24eaa4604056
-<?xml version="1.0" encoding="utf-8" ?>
-<methodCall>
-<params>
-<user_id><![CDATA[test]]></user_id>
-<password><![CDATA[1234]]></password>
-<keep_signed><![CDATA[]]></keep_signed>
-<module><![CDATA[member]]></module>
-<act><![CDATA[procMemberLogin]]></act>
-</params>
-</methodCall>
-'''
