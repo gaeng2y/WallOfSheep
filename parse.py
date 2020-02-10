@@ -26,11 +26,11 @@ def insertInfo(conn, cur, id, pw, ip, host):
 
 def cntHost(conn, cur, host):
 	cur.execute('SELECT host from count')
-	hostRes = cur.fetch()
-	print(hostRes)
+	hostRes = cur.fetchall()
+	print(type(hostRes))
 	cur.execute('SELECT count from count')
-	cntRes = cur.fetch()
-	print(cntRes)
+	cntRes = cur.fetchall()
+	print(type(cntRes))
 
 def parsePkt(pkt):
 	# host parse
