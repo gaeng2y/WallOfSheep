@@ -17,20 +17,25 @@ def obfuscate(passwd):
 	return passwd[0] + "*" * (len(passwd) - 2) + passwd[-1]
 
 def insertInfo(conn, cur, id, pw, ip, host):
-	querry = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
-	cur.execute(querry, (id, pw, ip, host))
+	query = 'INSERT into wos(id, pw, host, ip) values(%s, %s, %s, %s)'
+	cur.execute(query, (id, pw, ip, host))
 	conn.commit()
 	cur.execute('select * from wos ORDER BY no DESC limit 1')
 	res = cur.fetchall()
 	print(res)
 
 def cntHost(conn, cur, host):
+	'''
 	cur.execute('SELECT host from count')
 	hostRes = cur.fetchall()
-	print(type(hostRes))
 	cur.execute('SELECT count from count')
 	cntRes = cur.fetchall()
 	print(type(cntRes))
+	'''
+	hostquery = 'SELECT EXISTS (SELECT * FROM count WHERE host = %s) as success'
+	cur.execute(hostquery, (host))
+	res = cur.fetchall()
+	print(res)
 
 def parsePkt(pkt):
 	# host parse
