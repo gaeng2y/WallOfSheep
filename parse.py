@@ -76,8 +76,8 @@ def parsePkt(pkt):
 			userpw = str(userpw)
 		#print(userpw)
 
-	#return (userid, obfuscate(userpw), host)
-	return (userid, userpw, host)
+	return (userid, obfuscate(userpw), host)
+	#return (userid, userpw, host)
 
 def main():
 	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep', charset='utf8')
@@ -91,7 +91,7 @@ def main():
 			try:
 				insertInfo(conn, cur, uid, upw, ip, host)
 				cntHost(conn, cur, host)
-				print(uid, upw, host,ip)
+				#print(uid, upw, host,ip)
 			except Exception:
 				pass
 			finally:
