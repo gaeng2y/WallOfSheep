@@ -30,6 +30,7 @@ def cntHost(conn, cur, host):
 	if res[0][0] == 0:
 		query = 'INSERT into count(host) values(%s)'
 		cur.execute(query, host)
+		cur.commit()
 		cur.execute('SELECT * FROM wos')
 		res = cur.fetchall()
 		print(res)
