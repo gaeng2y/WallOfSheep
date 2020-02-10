@@ -58,6 +58,7 @@ def parsePkt(pkt):
 		if not userpw:
 			return None
 		userpw = userpw.groups()[1]
+		userpw = str(userpw)
 		#print(userpw)
 	# post => last value
 	else:
@@ -71,6 +72,7 @@ def parsePkt(pkt):
 		if not userpw:
 			return None
 		userpw = userpw[-1][-1]
+		userpw = str(userpw)
 		#print(userpw)
 
 	return (userid, obfuscate(userpw), host)
