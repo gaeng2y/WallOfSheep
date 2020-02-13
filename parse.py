@@ -50,7 +50,6 @@ def parsePkt(pkt):
 	if not host:
 		return None
 	host = host.groups()[0]
-	host = host.decode()
 
 	# method call
 	method = re.search(METHOD, pkt)
