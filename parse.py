@@ -4,14 +4,13 @@ import pymysql
 import xml.etree.ElementTree as ET
 import sniff
 
-METHOD = re.compile(rb"(POST|GET)")
-HOST = re.compile(rb"host\s?:\s?(?P<host>[^(\r)]*)", re.I)
-CONTYPE = re.compile(rb"content-type\s?:\s?(?P<contenttype>[^(\r)]*)", re.I)
-USERNAME = re.compile(rb"(os_id|userid|login|user_id|name)[^(&|=)]*=(?P<username>[^(&|=)]*)", re.I)
-PASSWD = re.compile(rb"(pass|userpw|pw|user_pw)[^(&|=)]*=(?P<pass>[^(&|=|\')]*)", re.I)
+METHOD = re.compile(r"(POST|GET)")
+HOST = re.compile(r"host\s?:\s?(?P<host>[^(\r)]*)", re.I)
+CONTYPE = re.compile(r"content-type\s?:\s?(?P<contenttype>[^(\r)]*)", re.I)
+USERNAME = re.compile(r"(os_id|userid|login|user_id|name)[^(&|=)]*=(?P<username>[^(&|=)]*)", re.I)
+PASSWD = re.compile(r"(pass|userpw|pw|user_pw)[^(&|=)]*=(?P<pass>[^(&|=|\')]*)", re.I)
 
 def obfuscate(passwd):
-	passwd = passwd.decode()
 	return passwd[0] + "*" * (len(passwd) - 2) + passwd[-1]
 
 def insertInfo(conn, cur, id, pw, ip, host, mac):
@@ -51,13 +50,13 @@ def parsePkt(pkt):
 	if not host:
 		return None
 	host = host.groups()[0]
-	host = host.decode()
+	#host = host.decode()
 
 	# method call
 	method = re.search(METHOD, pkt)
 	if not method:
 		return None
-	method = method.groups()[0]
+	#method = method.groups()[0]
 
 	# get
 	if method == b'GET':
@@ -98,7 +97,7 @@ def main():
 	cur = conn.cursor()
 	
 	while(True):
-		pkt, ip, mac = sniff.sniff()
+		pkt, ip, mac, protocol = sniff.sniff()
 		rlt = parsePkt(pkt)
 		if rlt is not None:
 			uid, upw, host = rlt[0], rlt[1], rlt[2]
