@@ -37,9 +37,7 @@ def cntHost(conn, cur, host):
 		cur.execute(query, host)
 		cnt = cur.fetchall()
 		cnt = cnt[0][0]
-		#print(cnt)
 		cnt += 1
-		#print(cnt)
 		query = 'UPDATE count SET count = %s WHERE host = %s'
 		cur.execute(query, (cnt, host))
 		conn.commit()
@@ -88,8 +86,10 @@ def parsePkt(pkt):
 			if not userpw:
 				return None
 			userpw = userpw[-1][-1]
-			#userpw = str(userpw)
-		#print(userpw)
+		elif b'text/plain' in contype:
+			pass
+		elif b'json' in contype:
+			pass
 
 	return (userid, obfuscate(userpw), host)
 
