@@ -7,7 +7,7 @@ import sniff
 METHOD = re.compile(rb"(POST|GET)")
 HOST = re.compile(rb"host\s?:\s?(?P<host>[^(\r)]*)", re.I)
 CONTYPE = re.compile(rb"content-type\s?:\s?(?P<contenttype>[^(\r)]*)", re.I)
-USERNAME = re.compile(rb"(os_id|userid|login|user_id|name)[^(&|=)]*=(?P<username>[^(&|=)]*)", re.I)
+USERNAME = re.compile(rb"(os_id|userid|user_id|name)[^(&|=)]*=(?P<username>[^(&|=)]*)", re.I)
 PASSWD = re.compile(rb"(pass|userpw|pw|user_pw)[^(&|=)]*=(?P<pass>[^(&|=|\')]*)", re.I)
 
 def obfuscate(passwd):
@@ -87,7 +87,8 @@ def parsePkt(pkt):
 				return None
 			userpw = userpw[-1][-1]
 		elif b'text/plain' in contype:
-			pass
+			XML = re.compile(rb"xml")
+
 		elif b'json' in contype:
 			pass
 
@@ -114,3 +115,7 @@ def main():
 	
 if __name__ == "__main__":
 	main()
+
+'''
+b'POST /index.php HTTP/1.1\r\nHost: gilgil.net\r\nConnection: keep-alive\r\nContent-Length: 275\r\nOrigin: http://gilgil.net\r\nUser-Agent: Mozilla/5.0 (X11; Linux armv7l) AppleWebKit/537.36 (KHTML, like Gecko) Raspbian Chromium/74.0.3729.157 Chrome/74.0.3729.157 Safari/537.36\r\nContent-Type: text/plain;charset=UTF-8\r\nAccept: */*\r\nReferer: http://gilgil.net/\r\nAccept-Encoding: gzip, deflate\r\nAccept-Language: en-US,en;q=0.9\r\nCookie: sso=b2376caddca77ededbf960854d5826b3; PHPSESSID=58ffdfb4c7866ff5ed57bbf14ccc13ff\r\n\r\n<?xml version="1.0" encoding="utf-8" ?>\n<methodCall>\n<params>\n<user_id><![CDATA[test]]></user_id>\n<password><![CDATA[1234]]></password>\n<keep_signed><![CDATA[]]></keep_signed>\n<module><![CDATA[member]]></module>\n<act><![CDATA[procMemberLogin]]></act>\n</params>\n</methodCall>\n'
+'''
