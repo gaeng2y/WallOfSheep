@@ -86,6 +86,10 @@ def parsePkt(pkt):
 			if not userpw:
 				return None
 			userpw = userpw[-1][-1]
+		elif b'text/plain' in contype:
+			pass
+		elif b'json' in contype:
+			pass
 
 	return (userid, obfuscate(userpw), host)
 
