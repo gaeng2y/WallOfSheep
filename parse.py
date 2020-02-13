@@ -87,7 +87,7 @@ def parsePkt(pkt):
 				return None
 			userpw = userpw[-1][-1]
 		elif b'text/plain' in contype:
-			XML = re.compile(rb"xml")
+			pass
 
 		elif b'json' in contype:
 			pass
