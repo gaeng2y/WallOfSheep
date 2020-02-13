@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import re
 import sys
 import pymysql
@@ -98,7 +100,7 @@ def main():
 	cur = conn.cursor()
 	
 	while(True):
-		pkt, ip, mac, protocol = sniff.sniff()
+		pkt, ip, mac, protocol = sniff.sniff(sys.argv[1])
 		rlt = parsePkt(pkt)
 		if rlt is not None:
 			uid, upw, host = rlt[0], rlt[1], rlt[2]
