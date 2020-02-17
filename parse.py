@@ -94,7 +94,7 @@ def parsePkt(pkt):
 		elif b'json' in contype:
 			pass
 
-	return (userid, obfuscate(userpw), host)
+	return (userid, userpw, obfuscate(userpw), host)
 
 def main():
 	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep', charset='utf8')
@@ -104,10 +104,10 @@ def main():
 		pkt, ip, mac, protocol = sniff.sniff("wlan1")
 		rlt = parsePkt(pkt)
 		if rlt is not None:
-			uid, upw, host = rlt[0], rlt[1], rlt[2]
+			uid, upw, obsupw, host = rlt[0],rlt[1], rlt[2], rlt[3]
 			try:
 				print(uid, upw, host, ip, mac)
-				insertInfo(conn, cur, uid, upw, ip, host, mac, protocol)
+				insertInfo(conn, cur, uid, obsupw, ip, host, mac, protocol)
 				cntHost(conn, cur, host)
 			except Exception:
 				pass
