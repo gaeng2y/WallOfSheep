@@ -15,9 +15,9 @@ def obfuscate(passwd):
 	passwd = passwd.decode()
 	return passwd[0] + "*" * (len(passwd) - 2) + passwd[-1]
 
-def insertInfo(conn, cur, id, pw, ip, host, mac):
-	query = 'INSERT into wos (id, pw, host, ip, mac) values(%s, %s, %s, %s, %s)'
-	cur.execute(query, (id, pw, host, ip, mac))
+def insertInfo(conn, cur, id, pw, ip, host, mac, protocol):
+	query = 'INSERT into wos (id, pw, host, ip, mac, protocol) values(%s, %s, %s, %s, %s, %s)'
+	cur.execute(query, (id, pw, host, ip, mac, protocol))
 	conn.commit()
 	print("Success Insert")
 
@@ -46,6 +46,7 @@ def cntHost(conn, cur, host):
 
 def parsePkt(pkt):
 	# host parse
+	print(pkt)
 	host = re.search(HOST, pkt)
 	if not host:
 		return None
@@ -106,7 +107,7 @@ def main():
 			uid, upw, host = rlt[0], rlt[1], rlt[2]
 			try:
 				print(uid, upw, host, ip, mac)
-				insertInfo(conn, cur, uid, upw, ip, host, mac)
+				insertInfo(conn, cur, uid, upw, ip, host, mac, protocol)
 				cntHost(conn, cur, host)
 			except Exception:
 				pass
@@ -117,6 +118,3 @@ def main():
 if __name__ == "__main__":
 	main()
 
-'''
-b'POST /index.php HTTP/1.1\r\nHost: gilgil.net\r\nConnection: keep-alive\r\nContent-Length: 275\r\nOrigin: http://gilgil.net\r\nUser-Agent: Mozilla/5.0 (X11; Linux armv7l) AppleWebKit/537.36 (KHTML, like Gecko) Raspbian Chromium/74.0.3729.157 Chrome/74.0.3729.157 Safari/537.36\r\nContent-Type: text/plain;charset=UTF-8\r\nAccept: */*\r\nReferer: http://gilgil.net/\r\nAccept-Encoding: gzip, deflate\r\nAccept-Language: en-US,en;q=0.9\r\nCookie: sso=b2376caddca77ededbf960854d5826b3; PHPSESSID=58ffdfb4c7866ff5ed57bbf14ccc13ff\r\n\r\n<?xml version="1.0" encoding="utf-8" ?>\n<methodCall>\n<params>\n<user_id><![CDATA[test]]></user_id>\n<password><![CDATA[1234]]></password>\n<keep_signed><![CDATA[]]></keep_signed>\n<module><![CDATA[member]]></module>\n<act><![CDATA[procMemberLogin]]></act>\n</params>\n</methodCall>\n'
-'''

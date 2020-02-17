@@ -14,7 +14,7 @@ def sniff(network_interface):
             rdot = dpkt.radiotap.Radiotap(pkt)
             logical_link_control = dpkt.llc.LLC(rdot.data.data_frame.data)
             if logical_link_control.data.data.dport is 80:
-                return logical_link_control.data.data, ip2str(logical_link_control.data.src), mac2str(rdot.data.data_frame.src), "HTTP"
+                return logical_link_control.data.data.data, ip2str(logical_link_control.data.src), mac2str(rdot.data.data_frame.src), "HTTP"
         except Exception:
             pass
 
