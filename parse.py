@@ -15,7 +15,7 @@ def obfuscate(passwd):
 	passwd = passwd.decode()
 	return passwd[0] + "*" * (len(passwd) - 2) + passwd[-1]
 
-def insertInfo(conn, cur, id, pw, ip, host, mac, protocol):
+def insertInfo(conn, cur, id, pw, ip, host, mac):
 	query = 'INSERT into wos (id, pw, host, ip, mac) values(%s, %s, %s, %s, %s)'
 	cur.execute(query, (id, pw, host, ip, mac))
 	conn.commit()
@@ -106,11 +106,7 @@ def main():
 			uid, upw, obsupw, host = rlt[0],rlt[1], rlt[2], rlt[3]
 			try:
 				print(uid, upw, host, ip, mac)
-				#insertInfo(conn, cur, uid, obsupw, ip, host, mac)
-				query = 'INSERT into wos (id, pw, host, ip, mac) values(%s, %s, %s, %s, %s)'
-				cur.execute(query, (uid, obsupw, host, ip, mac))
-				conn.commit()
-				print("Success Info Insert")
+				insertInfo(conn, cur, uid, obsupw, ip, host, mac)
 				cntHost(conn, cur, host)
 			except Exception:
 				pass
