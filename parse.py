@@ -19,7 +19,7 @@ def insertInfo(conn, cur, id, pw, ip, host, mac, protocol):
 	query = 'INSERT into wos (id, pw, host, ip, mac) values(%s, %s, %s, %s, %s)'
 	cur.execute(query, (id, pw, host, ip, mac))
 	conn.commit()
-	print("Success Insert")
+	print("Success Info Insert")
 
 def cntHost(conn, cur, host):
 	initcnt = 1
@@ -32,7 +32,7 @@ def cntHost(conn, cur, host):
 		query = 'INSERT into count (host, count) values(%s, %s)'
 		cur.execute(query, (host, initcnt))
 		conn.commit()
-		print("count insert success")
+		print("Insert Count Success")
 	else:
 		query = 'SELECT count FROM count WHERE host = %s'
 		cur.execute(query, host)
@@ -42,7 +42,7 @@ def cntHost(conn, cur, host):
 		query = 'UPDATE count SET count = %s WHERE host = %s'
 		cur.execute(query, (cnt, host))
 		conn.commit()
-		print("count update suc")
+		print("Update Count Success")
 
 def parsePkt(pkt):
 	# host parse
