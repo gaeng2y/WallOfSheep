@@ -103,7 +103,7 @@ def main():
 		if rlt is not None:
 			uid, upw, obsupw, host = rlt[0],rlt[1], rlt[2], rlt[3]
 			try:
-				print(uid, upw, host, ip, mac)
+				print("ID: " + uid + "PW: " + upw + "Host: " + host + "IP: " + ip "MAC Address: " +mac + "Protocol: "+ protocol)
 				insertInfo(conn, cur, uid, obsupw, ip, host, mac, protocol)
 				cntHost(conn, cur, host)
 			except Exception:
