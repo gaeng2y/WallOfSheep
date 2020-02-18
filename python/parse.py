@@ -99,12 +99,11 @@ def main():
 	
 	while(True):
 		pkt, ip, mac, protocol = sniff.sniff("wlan1")
-		print("\n")
 		rlt = parsePkt(pkt)
 		if rlt is not None:
 			uid, upw, obsupw, host = rlt[0],rlt[1], rlt[2], rlt[3]
 			try:
-				print("ID: ", uid.decode(), "\nPW: ", upw.decode(), "\nHost: ", host, "\nIP: ", ip, "\nMAC Address: ", mac, "\nProtocol: ", protocol,"\n")
+				print("\n Parsing Result \nID: ", uid.decode(), "\nPW: ", upw.decode(), "\nHost: ", host, "\nIP: ", ip, "\nMAC Address: ", mac, "\nProtocol: ", protocol,"\n")
 				insertInfo(conn, cur, uid, obsupw, ip, host, mac, protocol)
 				cntHost(conn, cur, host)
 			except Exception:
