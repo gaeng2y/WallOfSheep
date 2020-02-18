@@ -26,7 +26,6 @@ def cntHost(conn, cur, host):
 	cur.execute(query, host)
 	res = cur.fetchall()
 	res = res[0][0]
-	#print(res)
 	if (res == 0):
 		query = 'INSERT into count (host, count) values(%s, %s)'
 		cur.execute(query, (host, initcnt))
@@ -70,7 +69,7 @@ def parsePkt(pkt):
 		if not userpw:
 			return None
 		userpw = userpw.groups()[1]
-		#print(userpw)
+
 	# post => last value
 	else:
 		contype = re.search(CONTYPE, pkt)
