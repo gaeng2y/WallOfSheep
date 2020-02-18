@@ -18,7 +18,7 @@ def insertInfo(conn, cur, id, pw, ip, host, mac, protocol):
 	query = 'INSERT into wos (id, pw, host, ip, mac, protocol) values(%s, %s, %s, %s, %s, %s)'
 	cur.execute(query, (id, pw, host, ip, mac, protocol))
 	conn.commit()
-	print("Success Info Insert")
+	print("Success Info Insert\n")
 
 def cntHost(conn, cur, host):
 	initcnt = 1
@@ -30,7 +30,7 @@ def cntHost(conn, cur, host):
 		query = 'INSERT into count (host, count) values(%s, %s)'
 		cur.execute(query, (host, initcnt))
 		conn.commit()
-		print("Insert Count Success")
+		print("Insert Count Success\n")
 	else:
 		query = 'SELECT count FROM count WHERE host = %s'
 		cur.execute(query, host)
@@ -40,7 +40,7 @@ def cntHost(conn, cur, host):
 		query = 'UPDATE count SET count = %s WHERE host = %s'
 		cur.execute(query, (cnt, host))
 		conn.commit()
-		print("Update Count Success")
+		print("Update Count Success\n")
 
 def parsePkt(pkt):
 	# host parse
@@ -99,11 +99,12 @@ def main():
 	
 	while(True):
 		pkt, ip, mac, protocol = sniff.sniff("wlan1")
+		print()
 		rlt = parsePkt(pkt)
 		if rlt is not None:
 			uid, upw, obsupw, host = rlt[0],rlt[1], rlt[2], rlt[3]
 			try:
-				print("ID: ", uid.decode(), "PW: ", upw.decode(), "Host: ", host, "IP: ", ip, "MAC Address: ", mac, "Protocol: ", protocol)
+				print("ID: ", uid.decode(), "\nPW: ", upw.decode(), "\nHost: ", host, "\nIP: ", ip, "\nMAC Address: ", mac, "\nProtocol: ", protocol)
 				insertInfo(conn, cur, uid, obsupw, ip, host, mac, protocol)
 				cntHost(conn, cur, host)
 			except Exception:
