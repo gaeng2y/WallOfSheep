@@ -4,6 +4,7 @@ import pcap
 import dpkt
 import aplist
 import sys
+import pymysql
 
 def mac2str(mac):
     return ':'.join(map('{:02X}'.format, mac))
