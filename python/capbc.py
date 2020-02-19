@@ -3,6 +3,7 @@
 import pcap
 import dpkt
 import aplist
+import sys
 
 def mac2str(mac):
     return ':'.join(map('{:02X}'.format, mac))
@@ -18,4 +19,4 @@ def sniff(network_interface):
         except Exception:
             pass
 
-sniff("wlan1")
+sniff(sys.argv[1])
