@@ -6,7 +6,7 @@ import sniff
 
 METHOD = re.compile(rb"(POST|GET)")
 HOST = re.compile(rb"host\s?:\s?(?P<host>[^(\r)]*)", re.I)
-CONTYPE = re.compile(rb"content-type\s?:\s?(?P<contenttype>[^(\r)]*)", re.I)
+#CONTYPE = re.compile(rb"content-type\s?:\s?(?P<contenttype>[^(\r)]*)", re.I)
 USERNAME = re.compile(rb"(os_id|userid|user_id|name)[^(&|=)]*=(?P<username>[^(&|=)]*)", re.I)
 PASSWD = re.compile(rb"(pass|userpw|pw|user_pw)[^(&|=)]*=(?P<pass>[^(&|=|\')]*)", re.I)
 
@@ -44,7 +44,7 @@ def cntHost(conn, cur, host):
 
 def parsePkt(pkt):
 	print(pkt)
-	
+
 	# host parse
 	host = re.search(HOST, pkt)
 	if not host:
@@ -73,9 +73,21 @@ def parsePkt(pkt):
 
 	# post => last value
 	else:
+		userid = re.findall(USERNAME, pkt)
+		if not userid:
+			return None
+		userid = userid[-1][-1]
+			
+		userpw = re.findall(PASSWD, pkt)
+		if not userpw:
+			return None
+		userpw = userpw[-1][-1]
+
+	return (userid, userpw, obfuscate(userpw), host)
+	'''
 		contype = re.search(CONTYPE, pkt)
 		contype = contype.groups()[0]
-
+		
 		if b'urlencoded' in contype:
 			userid = re.findall(USERNAME, pkt)
 			if not userid:
@@ -91,9 +103,7 @@ def parsePkt(pkt):
 
 		elif b'json' in contype:
 			pass
-
-	return (userid, userpw, obfuscate(userpw), host)
-
+		'''
 def main():
 	conn = pymysql.connect(host='localhost', user='jyp', password='wldbs11', db='wallofsheep', charset='utf8')
 	cur = conn.cursor()
