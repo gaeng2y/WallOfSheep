@@ -11,13 +11,20 @@ def mac2str(mac):
 
 def sniff(network_interface, conn, cur):
     sniffer = pcap.pcap(name=network_interface, promisc=True, immediate=True, timeout_ms=50)
+    #bssid is key essid is value
+    ap_dict = dict()
     for ts, pkt in sniffer:
         try:
             rdot = dpkt.radiotap.Radiotap(pkt)
             ap = rdot.data.ssid.info.decode()
+            bssid = mac2str(rdot.data.mgmt.bssid)
             if ap is not None:
-            	aplist.aplist(conn, cur, mac2str(rdot.data.mgmt.bssid), ap)
-            	print(ap + " "*(30-len(ap)) + mac2str(rdot.data.mgmt.bssid))
+            	if bssid in ap_dict.keys():
+            		pass
+            	else:
+            		ap_dict[bssid] = ap
+            		aplist.aplist(conn, cur, bssid, ap)
+
         except Exception:
             pass
 
