@@ -43,8 +43,6 @@ def cntHost(conn, cur, host):
 		print("Update Count Success\n")
 
 def parsePkt(pkt):
-	print(pkt)
-
 	# host parse
 	host = re.search(HOST, pkt)
 	if not host:
